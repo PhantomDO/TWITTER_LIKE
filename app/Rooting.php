@@ -3,6 +3,7 @@
 namespace app;
 
 use app\src\App;
+use controller\ProfileController;
 
 class Rooting
 {
@@ -20,5 +21,17 @@ class Rooting
     public function Setup()
     {
         $app = $this->app;
+
+        $this->app->Get('/', function () use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->ProfileHandler(1);
+        });
+
+        $this->app->Get('/profile/(\d+)', function ($id) use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->ProfileHandler($id);
+        });
     }
 }

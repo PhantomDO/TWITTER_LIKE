@@ -103,7 +103,9 @@ class App
          * TODO: override de la var $method en lui donnant la nouvelle $method dans le champ caché du formulaire
          */
         $method = $_SERVER['REQUEST_METHOD'] ?? self::GET;
-        $uri = substr($_SERVER['REQUEST_URI'], 5) ?? '/';
+        $uri = substr($_SERVER['REQUEST_URI'], 8) ?? '/';
+
+        var_dump($uri);
 
         if(isset($_POST['_method']))
         {

@@ -16,10 +16,10 @@ $container = new ServiceContainer();
 $app = new App($container);
 
 $app->setService('database', new Database(
-    '127.0.0.1', // Addresse de la base de données
-    'twitter', // Nom de la base de donnée
-    'root', // Utilisateur de la base de données
-    '', // Mot de passe de la base de données
+    'bmwl6cwh5kmqtvmnydhg-mysql.services.clever-cloud.com', // Addresse de la base de données
+    'bmwl6cwh5kmqtvmnydhg', // Nom de la base de donnée
+    'urn18higmxg4dzik', // Utilisateur de la base de données
+    'ZQjPvkj23t5VjBVJbVmo', // Mot de passe de la base de données
     '3306'
 ));
 
