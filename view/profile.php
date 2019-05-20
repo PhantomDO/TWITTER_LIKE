@@ -7,9 +7,9 @@
 </head>
 <title>Profile</title>
 <p>
-<h1>Profile <?= $params['profile']->GetName() ?></h1>
-<p><a href="profile/<?= $params['profile']->GetName(); ?>"></a>
-    Name of the guy: <?= $params['profile']->GetName(); ?>
+<h1>Profile <?= $params['profile']->GetLogin() ?></h1>
+<p><a href="profile/<?= $params['profile']->GetLogin(); ?>"></a>
+    Name of the guy: <?= $params['profile']->GetLogin(); ?>
 </p>
 </body>
 </html>

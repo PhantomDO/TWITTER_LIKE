@@ -30,4 +30,29 @@ class ProfileController extends ControllerBase
         $render = $this->app->getService('render');
         $render('profile', ['profile' => $profile]);
     }
+
+    public function Create()
+    {
+        $render = $this->app->getService('render');
+        $render('login');
+    }
+
+    public function CreateMember()
+    {
+        try { // on utilise un try catch pour renvoyer vers une erreur si la requête n'a pas fonctionné
+            $element = [
+                'login' => $_POST['login'],
+                'password' => $_POST['password']
+            ];
+
+            $profile = new ProfileGateway($this->app);
+            $profile->Hydrate($element);
+            $result = $profile->Insert();
+        } catch (\Exception $e) {
+            $render = $this->app->getService('render');
+            $render('login',['error' => $e, 'profile' => $profile]); // On renvoie la profile acutelle au template
+        }
+
+        print_r("New profile has been sucessfully created");
+    }
 }

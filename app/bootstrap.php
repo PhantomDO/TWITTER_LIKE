@@ -11,6 +11,7 @@ use app\src\App;
 use app\Rooting;
 use app\src\ServiceContainer\ServiceContainer;
 use database\Database;
+use model\finder\ProfileFinder;
 
 $container = new ServiceContainer();
 $app = new App($container);
@@ -36,6 +37,8 @@ $app->setService('render', function (string $template, Array $params = [])
     ob_end_flush();
     die();
 });
+
+$app->setService('profileFinder', new ProfileFinder($app));
 
 $routing = new Rooting($app);
 $routing->Setup();

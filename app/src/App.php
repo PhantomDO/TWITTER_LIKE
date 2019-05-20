@@ -105,8 +105,6 @@ class App
         $method = $_SERVER['REQUEST_METHOD'] ?? self::GET;
         $uri = substr($_SERVER['REQUEST_URI'], 8) ?? '/';
 
-        var_dump($uri);
-
         if(isset($_POST['_method']))
         {
             if(strtoupper($_POST['_method']) === self::PUT)

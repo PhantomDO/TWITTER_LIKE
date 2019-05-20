@@ -33,5 +33,17 @@ class Rooting
             $controller = new ProfileController($app);
             $controller->ProfileHandler($id);
         });
+
+        $this->app->Get('/login', function () use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->Create();
+        });
+
+        $this->app->Post('/handleLogin', function () use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->CreateMember();
+        });
     }
 }
