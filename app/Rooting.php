@@ -43,7 +43,7 @@ class Rooting
         $this->app->Post('/handleLogin', function () use ($app)
         {
             $controller = new ProfileController($app);
-            $controller->CreateMember();
+            $controller->CheckExistingLogin();
         });
     }
 }

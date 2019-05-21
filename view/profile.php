@@ -10,6 +10,7 @@
 <h1>Profile <?= $params['profile']->GetLogin() ?></h1>
 <p><a href="profile/<?= $params['profile']->GetLogin(); ?>"></a>
     Name of the guy: <?= $params['profile']->GetLogin(); ?>
+    <?php var_dump($_SESSION); ?>
 </p>
 </body>
 </html>

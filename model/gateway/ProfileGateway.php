@@ -79,11 +79,14 @@ class ProfileGateway
 
     public function Insert() : void
     {
-        $query = $this->conn->prepare('INSERT INTO users (login, password, adress) VALUES (:login, :password, :adress)');
+        $query = $this->conn->prepare('
+        INSERT INTO users (login, password, adress, role_id) VALUES (:login, :password, :adress, :role_id)
+        ');
         $executed = $query->execute([
             ':login' => $this->login,
             ':password' => $this->password,
-            ':adress' => $this->adress
+            ':adress' => $this->adress,
+            ':role_id' => 2
         ]);
 
         if (!$executed) throw new \Error('Insert failed');
@@ -91,12 +94,12 @@ class ProfileGateway
         $this->id = $this->conn->lastInsertId();
     }
 
-    public function Login($data)
+    public function Login()
     {
         $query = $this->conn->prepare('
-        SELECT users.login, users.adress, roles.name, roles.slug, roles.level 
-        FROM users LEFT JOIN roles ON users.role_id = roles_id 
-        WHERE login=:login AND password=:password');
+        SELECT users.login, users.password, users.adress, roles.name, roles.slug, roles.level 
+        FROM users LEFT JOIN roles ON users.role_id = roles.id
+        WHERE users.login=:login AND users.password=:password');
         $executed = $query->execute([
             ':login' => $this->login,
             ':password' => $this->password
