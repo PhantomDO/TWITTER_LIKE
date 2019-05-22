@@ -25,25 +25,49 @@ class Rooting
         $this->app->Get('/', function () use ($app)
         {
             $controller = new ProfileController($app);
-            $controller->ProfileHandler(1);
+            $controller->Home();
         });
 
-        $this->app->Get('/profile/(\d+)', function ($id) use ($app)
+        $this->app->Get('/profile/(\w+)', function ($name) use ($app)
         {
             $controller = new ProfileController($app);
-            $controller->ProfileHandler($id);
+            $controller->ProfileHandler($name);
+        });
+
+        $this->app->Get('/profile/(\w+)/settings', function ($name) use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->ProfileSettingsHandler($name);
+        });
+
+        $this->app->Put('/profile/(\w+)/settings/save', function ($name) use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->ProfileSettingsHandlerUpdate($name);
         });
 
         $this->app->Get('/login', function () use ($app)
         {
             $controller = new ProfileController($app);
-            $controller->Create();
+            $controller->Login();
         });
 
         $this->app->Post('/handleLogin', function () use ($app)
         {
             $controller = new ProfileController($app);
             $controller->CheckExistingLogin();
+        });
+
+        $this->app->Get('/register', function () use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->Register();
+        });
+
+        $this->app->Post('/handleRegister', function () use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->RegisterMember();
         });
     }
 }

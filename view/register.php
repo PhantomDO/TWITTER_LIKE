@@ -7,22 +7,23 @@
 
     <body>
         <?php
-        if(isset($params['error'])) {
+        if(isset($params['error'])){
             echo "
                    <p style='color: red'>
-                    This account doesn't exist.
-                    Do you want to create one ?
+                    An error as occured.
                    </p>
                 ";
             echo "
-            <a href='/twitter/register'><button type=\"submit\">Yes</button></a>
-            <a href='/twitter/'><button type=\"submit\">No</button></a>
+            <a href='/twitter/'><button type=\"submit\">Home</button></a>            
             ";
         }
         ?>
 
-        <form action="/twitter/handleLogin" method="POST"
-            <?php if (isset($params['error'])) echo "<p style='display: none'>"; ?>>
+        <form action="/twitter/handleRegister" method="POST"
+            <?php if (isset($params['error']))
+            {
+                echo "<p style='display: none'>";
+            }?>>>
             <p>
                 <label>Login</label>
                 <input type="text" name="login" value=
@@ -30,7 +31,7 @@
             </p>
             <p>
                 <label>Password</label>
-                <input type="password" name="password" value=
+                <input type="text" name="password" value=
                 "<?php if(isset($params['profile']))echo $params['profile']->GetPassword();?>">
             </p>
             <button type="submit">Submit</button>

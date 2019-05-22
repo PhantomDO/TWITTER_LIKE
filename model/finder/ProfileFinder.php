@@ -31,10 +31,10 @@ class ProfileFinder
         $this->conn = $this->app->getService('database')->getConnection();
     }
 
-    public function FindOneById($id)
+    public function FindOneByName($name)
     {
-        $query = $this->conn->prepare('SELECT t.login, t.id FROM users t WHERE t.id like :id ORDER BY t.login'); // Création de la requête + utilisation order by pour ne pas utiliser sort
-        $query->execute([':id' => '%' . $id .  '%']); // Exécution de la requête
+        $query = $this->conn->prepare('SELECT t.login, t.password, t.adress, t.id FROM users t WHERE t.login like :login ORDER BY t.login'); // Création de la requête + utilisation order by pour ne pas utiliser sort
+        $query->execute([':login' => '%' . $name .  '%']); // Exécution de la requête
         $element = $query->fetch(\PDO::FETCH_ASSOC);
 
         if ($element === 0) return null;

@@ -106,7 +106,7 @@ class ProfileGateway
         ]);
         $elements = $query->fetchAll(\PDO::FETCH_ASSOC);
 
-        if (count($elements) === 0) return null;
+        if (count($elements) === 0) throw new \Error('Login failed');
         else if (count($elements) > 0)
         {
             $_SESSION['ProfileGateway'] = $elements[0];
