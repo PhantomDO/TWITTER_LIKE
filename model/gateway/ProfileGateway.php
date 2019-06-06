@@ -19,6 +19,7 @@ class ProfileGateway
      */
     private $conn;
     private $id;
+    private $user_id;
     private $login;
     private $password;
     private $adress;
@@ -33,6 +34,12 @@ class ProfileGateway
     public function GetId()
     {
         return $this->id;
+    }/**
+ * @return mixed
+ */
+    public function GetUserId()
+    {
+        return $this->user_id;
     }
 
     /**
@@ -77,27 +84,63 @@ class ProfileGateway
         $this->adress = $adr;
     }
 
-    public function Insert() : void
+    public function InsertFollower($id) : void
     {
         $query = $this->conn->prepare('
-        INSERT INTO users (login, password, adress, role_id) VALUES (:login, :password, :adress, :role_id)
+        INSERT INTO followers (user_id, follower_id) 
+        VALUES (:user_id, :follower_id)
         ');
         $executed = $query->execute([
-            ':login' => $this->login,
-            ':password' => $this->password,
-            ':adress' => $this->adress,
-            ':role_id' => 2
+            ':user_id' => $this->user_id,
+            ':follower_id' => $id
         ]);
-
+        //var_dump($executed);
         if (!$executed) throw new \Error('Insert failed');
 
-        $this->id = $this->conn->lastInsertId();
+        //$this->id = $this->conn->lastInsertId();
+    }
+
+    public function DeleteFollower($id) : void
+    {
+        if (!$this->id) throw new \Error('Instance does not exist in base');
+
+        $query = $this->conn->prepare('
+        DELETE FROM followers WHERE user_id = :user_id AND follower_id = :follower_id
+        ');
+        $executed = $query->execute([
+            ':user_id' => $this->user_id,
+            ':follower_id' => $id
+        ]);
+
+        //var_dump($executed);
+        if (!$executed) throw new \Error('Delete failed');
+    }
+
+    public function UserIsFollowing($id)
+    {
+        if (!$this->user_id) throw new \Error('Instance does not exist in base');
+
+        $query = $this->conn->prepare('
+        SELECT followers.user_id, followers.follower_id FROM followers
+        WHERE followers.follower_id like :follower_id
+        AND followers.user_id like :user_id
+        ');
+
+        $executed = $query->execute([
+            ':user_id' => $this->user_id,
+            ':follower_id' => $id
+        ]);
+
+        $element = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if (!$element) false;
+        else return true;
     }
 
     public function Login()
     {
         $query = $this->conn->prepare('
-        SELECT users.login, users.password, users.adress, roles.name, roles.slug, roles.level 
+        SELECT users.login, users.password, users.adress, users.id,roles.name, roles.slug, roles.level 
         FROM users LEFT JOIN roles ON users.role_id = roles.id
         WHERE users.login=:login AND users.password=:password');
         $executed = $query->execute([
@@ -116,6 +159,24 @@ class ProfileGateway
         if (!$executed) throw new \Error('Login failed');
 
         return false;
+    }
+
+    public function Insert() : void
+    {
+        $query = $this->conn->prepare('
+        INSERT INTO users (login, password, adress, role_id) 
+        VALUES (:login, :password, :adress, :role_id)
+        ');
+        $executed = $query->execute([
+            ':login' => $this->login,
+            ':password' => $this->password,
+            ':adress' => $this->adress,
+            ':role_id' => 2
+        ]);
+
+        if (!$executed) throw new \Error('Insert failed');
+
+        $this->id = $this->conn->lastInsertId();
     }
 
     public function Update() : void
@@ -151,5 +212,6 @@ class ProfileGateway
         $this->login = $element['login'] ?? null;
         $this->password = $element['password'] ?? null;
         $this->adress = $element['adress'] ?? null;
+        $this->user_id = $_SESSION['ProfileGateway']['id'] ?? null;
     }
 }

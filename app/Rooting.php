@@ -31,19 +31,49 @@ class Rooting
         $this->app->Get('/profile/(\w+)', function ($name) use ($app)
         {
             $controller = new ProfileController($app);
-            $controller->ProfileHandler($name);
+            $controller->ProfileHandler($name, false);
         });
 
         $this->app->Get('/profile/(\w+)/settings', function ($name) use ($app)
         {
             $controller = new ProfileController($app);
-            $controller->ProfileSettingsHandler($name);
+            $controller->ProfileHandler($name, true);
         });
 
         $this->app->Put('/profile/(\w+)/settings/save', function ($name) use ($app)
         {
             $controller = new ProfileController($app);
             $controller->ProfileSettingsHandlerUpdate($name);
+        });
+
+        $this->app->Put('/profile/(\w+)/follow', function ($name) use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->ProfileFollowHandlerUpdate($name);
+        });
+
+        $this->app->Delete('/profile/(\w+)/unfollow', function ($name) use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->ProfileFollowHandlerUpdate($name);
+        });
+
+        $this->app->Get('/profile/(\w+)/tweet', function ($name) use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->ProfileHandler($name, true);
+        });
+
+        $this->app->Put('/profile/(\w+)/tweet/post', function ($name) use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->ProfileTweetHandlerUpdate($name, false);
+        });
+
+        $this->app->Put('/profile/(\w+)/tweet/delete', function ($name) use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->ProfileTweetHandlerUpdate($name, true);
         });
 
         $this->app->Get('/login', function () use ($app)

@@ -11,6 +11,7 @@ use controller\ControllerBase;
 
 use app\src\App;
 use model\gateway\ProfileGateway;
+use model\gateway\TweetGateway;
 
 class ProfileController extends ControllerBase
 {
@@ -25,30 +26,19 @@ class ProfileController extends ControllerBase
         $render('home');
     }
 
-    public function ProfileHandler($name)
+    public function ProfileHandler($name, $settings)
     {
         if ($name === null) {
             $this->Render('404');
             return;
         }
 
-        $settings = false;
         $profile = $this->app->getService('profileFinder')->FindOneByName($name);
-        $render = $this->app->getService('render');
-        $render('profile', ['profile' => $profile, 'settings' => $settings]);
-    }
 
-    public function ProfileSettingsHandler($name)
-    {
-        if ($name === null) {
-            $this->Render('404');
-            return;
-        }
+        $follow = $profile->UserIsFollowing($profile->GetId());
 
-        $settings = true;
-        $profile = $this->app->getService('profileFinder')->FindOneByName($name);
         $render = $this->app->getService('render');
-        $render('profile', ['profile' => $profile, 'settings' => $settings]);
+        $render('profile', ['profile' => $profile, 'settings' => $settings, 'follow' => $follow]);
     }
 
     public function ProfileSettingsHandlerUpdate($name)
@@ -77,6 +67,78 @@ class ProfileController extends ControllerBase
 
         print_r("Modification réussite.");
 
+        //Set Refresh header using PHP.
+        header( "refresh:2;url=http://localhost/twitter/profile/" . $profile->GetLogin());
+    }
+
+    public function ProfileFollowHandlerUpdate($name)
+    {
+        if ($name === null) {
+            $this->Render('404');
+            return;
+        }
+
+        try { // on utilise un try catch pour renvoyer vers une erreur si la requête n'a pas fonctionné
+            $element = [
+                'login' => $_POST['login'],
+                'user_id' => $_SESSION['ProfileGateway']['id'],
+                'id' => $_POST['id']
+            ];
+
+            $profile = new ProfileGateway($this->app);
+            $profile->Hydrate($element);
+            var_dump($profile);
+            $follow = $profile->UserIsFollowing($profile->GetId());
+
+            if (!$follow)
+                $result = $profile->InsertFollower($profile->GetId());
+            else
+                $result = $profile->DeleteFollower($profile->GetId());
+
+        } catch (\Exception $e) {
+            $render = $this->app->getService('render');
+            $render('profile',['error' => $e, 'profile' => $profile, 'follow' => $follow]); // On renvoie la city acutelle au template
+        }
+
+        if (!$follow)
+            print_r("Vous suivez : ". $profile->GetLogin());
+        else
+            print_r("Vous ne suivez plus : ". $profile->GetLogin());
+
+        //Set Refresh header using PHP.
+        header( "refresh:2;url=http://localhost/twitter/profile/" . $profile->GetLogin());
+    }
+
+    public function ProfileTweetHandlerUpdate($name, $delete)
+    {
+        if ($name === null) {
+            $this->Render('404');
+            return;
+        }
+
+        try { // on utilise un try catch pour renvoyer vers une erreur si la requête n'a pas fonctionné
+            $element = [
+                'login' => $_POST['login'],
+                'user_id' => $_SESSION['ProfileGateway']['id'],
+                'id' => $_POST['id']
+            ];
+
+            $profile = new TweetGateway($this->app);
+            $profile->Hydrate($element);
+
+            if (!$delete)
+                $result = $profile->InsertTweet();
+            else
+                $result = $profile->DeleteTweet($profile->GetTweetId());
+        } catch (\Exception $e) {
+            $render = $this->app->getService('render');
+            $render('profile',['error' => $e, 'profile' => $profile]); // On renvoie la city acutelle au template
+        }
+
+        if (!$delete)
+            print_r("insertion");
+        else
+            print_r("Delete");
         //Set Refresh header using PHP.
         header( "refresh:2;url=http://localhost/twitter/profile/" . $profile->GetLogin());
     }
