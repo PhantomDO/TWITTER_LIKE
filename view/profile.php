@@ -79,7 +79,68 @@
                     </form>
                 </p>
             <?php endif ?>
+
+            <?php if ($params['tweet'] === false):?>
+                <p>
+                    <a href='/twitter/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/tweet'>
+                        <button type="submit">Tweet</button>
+                    </a>
+                </p>
+            <?php endif ?>
+
+            <?php if ($params['tweet'] === true):?>
+                <p>
+                    <form action="/twitter/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/tweet/post" method="POST">
+                        <input name="_method" type="hidden" value="PUT" />
+                        <p>
+                            <label>Box de tweet</label>
+                            <input type="text" name="tweet_text">
+                            <input type="text" name="tweet_date" value="<?php $date = date("Y-m-d H:i:s"); echo (string)$date; ?>">
+                            <input type="hidden" name="user_id" value="<?php if(isset($_SESSION['ProfileGateway'])) echo $_SESSION['ProfileGateway']['id']; ?>">
+                        </p>
+
+                        <?php
+                        if(isset($_POST['tweet_text']))
+                        {
+                            $tweet_text= $_POST['tweet_text'];
+                            echo $tweet_text;
+                        }
+                        ?>
+
+                        <p>
+                            <a href='/twitter/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/tweet/post'>
+                                <button type="submit">Tweet</button>
+                            </a>
+                        </p>
+                </form>
+                </p>
+            <?php endif ?>
         <?php endif ?>
+
+        <?php if($params['timeline'] != null && ($params['follow'] || $_SESSION['ProfileGateway']['login'] === $params['profile']->GetLogin())):?>
+            <?php
+                foreach ($params['timeline'] as $tweet)
+                {
+                    echo $tweet->GetTweetText() . '<br>' . $tweet->GetTweetDate() . '<br>';
+
+                    if ($_SESSION['ProfileGateway']['login'] === $params['profile']->GetLogin())
+                    {
+                        $login = $params['profile']->GetLogin();
+
+                        echo '
+                            <form action="/twitter/profile/' . $login . '/tweet/delete" method="POST">
+                                <input name="_method" type="hidden" value="DELETE" />
+                                <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
+                                <button type="submit" name="delBtn">Delete</button>
+                            </form>
+                        ';
+                    }
+
+                    echo '<br><br>';
+                }
+            ?>
+        <?php endif ?>
+
     </p>
 
 

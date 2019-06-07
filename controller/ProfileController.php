@@ -26,7 +26,7 @@ class ProfileController extends ControllerBase
         $render('home');
     }
 
-    public function ProfileHandler($name, $settings)
+    public function ProfileHandler($name, $settings, $tweet)
     {
         if ($name === null) {
             $this->Render('404');
@@ -37,8 +37,20 @@ class ProfileController extends ControllerBase
 
         $follow = $profile->UserIsFollowing($profile->GetId());
 
+        $timeline = $this->app->getService('timelineFinder')->TimelineTweetUserId($profile);
+
+        $delete = false;
+
         $render = $this->app->getService('render');
-        $render('profile', ['profile' => $profile, 'settings' => $settings, 'follow' => $follow]);
+        $render('profile',
+        [
+                'profile' => $profile,
+                'settings' => $settings,
+                'tweet' => $tweet,
+                'follow' => $follow,
+                'timeline' => $timeline,
+                'delete' => $delete
+        ]);
     }
 
     public function ProfileSettingsHandlerUpdate($name)
@@ -87,7 +99,7 @@ class ProfileController extends ControllerBase
 
             $profile = new ProfileGateway($this->app);
             $profile->Hydrate($element);
-            var_dump($profile);
+            //var_dump($profile);
             $follow = $profile->UserIsFollowing($profile->GetId());
 
             if (!$follow)
@@ -118,21 +130,23 @@ class ProfileController extends ControllerBase
 
         try { // on utilise un try catch pour renvoyer vers une erreur si la requête n'a pas fonctionné
             $element = [
-                'login' => $_POST['login'],
                 'user_id' => $_SESSION['ProfileGateway']['id'],
-                'id' => $_POST['id']
+                'tweet_date' => $_POST['tweet_date'] ?? null,
+                'tweet_id' => $_POST['tweet_id'] ?? null,
+                'tweet_text' => $_POST['tweet_text'] ?? null
             ];
 
             $profile = new TweetGateway($this->app);
             $profile->Hydrate($element);
-
+            var_dump($profile);
             if (!$delete)
                 $result = $profile->InsertTweet();
             else
                 $result = $profile->DeleteTweet($profile->GetTweetId());
         } catch (\Exception $e) {
             $render = $this->app->getService('render');
-            $render('profile',['error' => $e, 'profile' => $profile]); // On renvoie la city acutelle au template
+            $tweet = false;
+            $render('profile',['error' => $e, 'profile' => $profile, 'tweet' => $tweet, 'delete' => $delete]); // On renvoie la city acutelle au template
         }
 
         if (!$delete)
@@ -140,7 +154,7 @@ class ProfileController extends ControllerBase
         else
             print_r("Delete");
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://localhost/twitter/profile/" . $profile->GetLogin());
+        header( "refresh:2;url=http://localhost/twitter/profile/" . $_SESSION['ProfileGateway']['login']);
     }
 
     public function Login()

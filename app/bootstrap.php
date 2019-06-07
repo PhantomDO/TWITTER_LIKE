@@ -12,6 +12,7 @@ use app\Rooting;
 use app\src\ServiceContainer\ServiceContainer;
 use database\Database;
 use model\finder\ProfileFinder;
+use model\finder\TimelineFinder;
 
 $container = new ServiceContainer();
 $app = new App($container);
@@ -39,6 +40,7 @@ $app->setService('render', function (string $template, Array $params = [])
 });
 
 $app->setService('profileFinder', new ProfileFinder($app));
+$app->setService('timelineFinder', new TimelineFinder($app));
 
 $routing = new Rooting($app);
 $routing->Setup();

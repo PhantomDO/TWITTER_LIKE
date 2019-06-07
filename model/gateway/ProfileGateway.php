@@ -118,7 +118,7 @@ class ProfileGateway
 
     public function UserIsFollowing($id)
     {
-        if (!$this->user_id) throw new \Error('Instance does not exist in base');
+        //if (!$this->user_id) throw new \Error('Instance does not exist in base');
 
         $query = $this->conn->prepare('
         SELECT followers.user_id, followers.follower_id FROM followers

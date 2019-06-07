@@ -31,13 +31,13 @@ class Rooting
         $this->app->Get('/profile/(\w+)', function ($name) use ($app)
         {
             $controller = new ProfileController($app);
-            $controller->ProfileHandler($name, false);
+            $controller->ProfileHandler($name, false, false);
         });
 
         $this->app->Get('/profile/(\w+)/settings', function ($name) use ($app)
         {
             $controller = new ProfileController($app);
-            $controller->ProfileHandler($name, true);
+            $controller->ProfileHandler($name, true, false);
         });
 
         $this->app->Put('/profile/(\w+)/settings/save', function ($name) use ($app)
@@ -61,7 +61,7 @@ class Rooting
         $this->app->Get('/profile/(\w+)/tweet', function ($name) use ($app)
         {
             $controller = new ProfileController($app);
-            $controller->ProfileHandler($name, true);
+            $controller->ProfileHandler($name, false, true);
         });
 
         $this->app->Put('/profile/(\w+)/tweet/post', function ($name) use ($app)
@@ -70,7 +70,7 @@ class Rooting
             $controller->ProfileTweetHandlerUpdate($name, false);
         });
 
-        $this->app->Put('/profile/(\w+)/tweet/delete', function ($name) use ($app)
+        $this->app->Delete('/profile/(\w+)/tweet/delete', function ($name) use ($app)
         {
             $controller = new ProfileController($app);
             $controller->ProfileTweetHandlerUpdate($name, true);

@@ -91,24 +91,26 @@ class TweetGateway
             ':tweet_text' => $this->tweet_text
         ]);
 
+        var_dump($executed);
+
         if (!$executed) throw new \Error('Insert failed');
 
         $this->tweet_id = $this->conn->lastInsertId();
     }
 
-    public function DeleteTweet() : void
+    public function DeleteTweet($id) : void
     {
         if (!$this->tweet_id) throw new \Error('Instance does not exist in base');
 
         $query = $this->conn->prepare('
-        DELETE FROM tweet WHERE user_id = :user_id AND tweet_id = :tweet_id
+        DELETE FROM tweet WHERE tweet_user_id = :user_id AND tweet_id = :tweet_id
         ');
         $executed = $query->execute([
             ':user_id' => $this->user_id,
-            ':tweet_id' => $this->tweet_id
+            ':tweet_id' => $id
         ]);
 
-        //var_dump($executed);
+        var_dump($executed);
         if (!$executed) throw new \Error('Delete failed');
     }
 
