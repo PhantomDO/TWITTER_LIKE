@@ -4,6 +4,7 @@ namespace app;
 
 use app\src\App;
 use controller\ProfileController;
+use controller\TimelineController;
 
 class Rooting
 {
@@ -26,6 +27,12 @@ class Rooting
         {
             $controller = new ProfileController($app);
             $controller->Home();
+        });
+
+        $this->app->Get('/timeline', function () use ($app)
+        {
+            $controller = new TimelineController($app);
+            $controller->TimelineHandler();
         });
 
         $this->app->Get('/profile/(\w+)', function ($name) use ($app)
@@ -74,6 +81,18 @@ class Rooting
         {
             $controller = new ProfileController($app);
             $controller->ProfileTweetHandlerUpdate($name, true);
+        });
+
+        $this->app->Put('/profile/(\w+)/tweet/update/rt', function ($name) use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->ProfileTweetSocialHandlerUpdate($name, true, false);
+        });
+
+        $this->app->Put('/profile/(\w+)/tweet/update/like', function ($name) use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->ProfileTweetSocialHandlerUpdate($name, false, true);
         });
 
         $this->app->Get('/login', function () use ($app)

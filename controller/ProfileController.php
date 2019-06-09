@@ -130,15 +130,15 @@ class ProfileController extends ControllerBase
 
         try { // on utilise un try catch pour renvoyer vers une erreur si la requête n'a pas fonctionné
             $element = [
-                'user_id' => $_SESSION['ProfileGateway']['id'],
+                'tweet_user_id' => $_SESSION['ProfileGateway']['id'],
                 'tweet_date' => $_POST['tweet_date'] ?? null,
                 'tweet_id' => $_POST['tweet_id'] ?? null,
-                'tweet_text' => $_POST['tweet_text'] ?? null
+                'tweet_text' => $_POST['tweet_text'] ?? null,
             ];
-
+            var_dump($element);
             $profile = new TweetGateway($this->app);
             $profile->Hydrate($element);
-            var_dump($profile);
+
             if (!$delete)
                 $result = $profile->InsertTweet();
             else
@@ -150,11 +150,45 @@ class ProfileController extends ControllerBase
         }
 
         if (!$delete)
-            print_r("insertion");
+            print_r("Insert");
         else
             print_r("Delete");
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://localhost/twitter/profile/" . $_SESSION['ProfileGateway']['login']);
+        header( "refresh:0;url=http://localhost/twitter/profile/" . $_SESSION['ProfileGateway']['login']);
+    }
+
+    public function ProfileTweetSocialHandlerUpdate($name, $rt, $like)
+    {
+        if ($name === null) {
+            $this->Render('404');
+            return;
+        }
+
+        try { // on utilise un try catch pour renvoyer vers une erreur si la requête n'a pas fonctionné
+            $element = [
+                'user_id' => $_SESSION['ProfileGateway']['id'],
+                'tweet_id' => $_POST['tweet_id'] ?? null,
+                ':tweet_like_count' => $_POST['tweet_like'] ?? null,
+                ':tweet_rt_count' => $_POST['tweet_rt'] ?? null
+            ];
+
+            $profile = new TweetGateway($this->app);
+            $profile->Hydrate($element);
+
+            if ($rt || $like)
+                $result = $profile->UpdateTweet($profile->GetTweetId());
+        } catch (\Exception $e) {
+            $render = $this->app->getService('render');
+            $tweet = false;
+            $render('profile',['error' => $e, 'profile' => $profile, 'tweet' => $tweet, 'rt' => $rt, 'like' => $rt]); // On renvoie la city acutelle au template
+        }
+
+        if ($rt)
+            print_r("Rt");
+        else if ($like)
+            print_r("Like");
+        //Set Refresh header using PHP.
+        header( "refresh:0;url=http://localhost/twitter/profile/" . $_SESSION['ProfileGateway']['login']);
     }
 
     public function Login()
@@ -187,7 +221,7 @@ class ProfileController extends ControllerBase
         print_r("Conexion etabli");
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://localhost/twitter/profile/" . $profile->GetLogin());
+        header( "refresh:2;url=http://localhost/twitter/timeline");
     }
 
     public function Register()

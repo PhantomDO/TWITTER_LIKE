@@ -83,15 +83,15 @@ class TweetGateway
     {
         $query = $this->conn->prepare('
         INSERT INTO tweet (tweet_date, tweet_text, tweet_user_id) 
-        VALUES (:tweet_date, :tweet_text, :user_id)
+        VALUES (:tweet_date, :tweet_text, :tweet_user_id)
         ');
         $executed = $query->execute([
-            ':user_id' => $this->user_id,
+            ':tweet_user_id' => $this->user_id,
             ':tweet_date' => $this->tweet_date,
             ':tweet_text' => $this->tweet_text
         ]);
 
-        var_dump($executed);
+        //var_dump($executed);
 
         if (!$executed) throw new \Error('Insert failed');
 
@@ -100,18 +100,38 @@ class TweetGateway
 
     public function DeleteTweet($id) : void
     {
+        var_dump($id);
         if (!$this->tweet_id) throw new \Error('Instance does not exist in base');
 
         $query = $this->conn->prepare('
-        DELETE FROM tweet WHERE tweet_user_id = :user_id AND tweet_id = :tweet_id
+        DELETE FROM tweet WHERE tweet_user_id = :tweet_user_id AND tweet_id = :tweet_id
         ');
         $executed = $query->execute([
-            ':user_id' => $this->user_id,
+            ':tweet_user_id' => $this->user_id,
             ':tweet_id' => $id
         ]);
 
-        var_dump($executed);
+        //var_dump($executed);
         if (!$executed) throw new \Error('Delete failed');
+    }
+
+    public function UpdateTweet($id) : void
+    {
+        if (!$this->tweet_id) throw new \Error('Instance does not exist in base');
+
+        $query = $this->conn->prepare('
+        UPDATE tweet SET tweet_like_count = :tweet_like_count, tweet_rt_count = :tweet_rt_count
+        WHERE tweet_user_id = :user_id AND tweet_id = :tweet_id
+        ');
+        $executed = $query->execute([
+            ':tweet_user_id' => $this->user_id,
+            ':tweet_id' => $id,
+
+            ':tweet_like_count' => $this->tweet_like ?? null,
+            ':tweet_rt_count' => $this->tweet_rt ?? null
+        ]);
+
+        if (!$executed) throw new \Error('Update failed');
     }
 
     public function Hydrate(Array $element)
@@ -121,6 +141,6 @@ class TweetGateway
         $this->tweet_text = $element['tweet_text'] ?? null;
         $this->tweet_like = $element['tweet_like'] ?? null;
         $this->tweet_rt = $element['tweet_rt'] ?? null;
-        $this->user_id = $_SESSION['ProfileGateway']['id'] ?? null;
+        $this->user_id = $element['tweet_user_id'] ?? null;
     }
 }

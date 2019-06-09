@@ -118,25 +118,44 @@
         <?php endif ?>
 
         <?php if($params['timeline'] != null && ($params['follow'] || $_SESSION['ProfileGateway']['login'] === $params['profile']->GetLogin())):?>
+            <h2>Timeline</h2>
             <?php
                 foreach ($params['timeline'] as $tweet)
                 {
+                    echo '---------------------------------------------------------------------------- <br>';
+                    $login = $params['profile']->GetLogin();
                     echo $tweet->GetTweetText() . '<br>' . $tweet->GetTweetDate() . '<br>';
+                    echo '<input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">';
+
+                    echo '
+                            <form action="/twitter/profile/' . $login . '/tweet/update/rt" method="POST">
+                                <input name="_method" type="hidden" value="PUT" />
+                                <input type="hidden" name="tweet_rt" value="' . $tweet->GetTweetRt() . '">
+                                <button type="submit" name="rtBtn">RT</button>
+                            </form>
+                        ';
+
+                    echo '
+                            <form action="/twitter/profile/' . $login . '/tweet/update/like" method="POST">
+                                <input name="_method" type="hidden" value="PUT" />
+                                <input type="hidden" name="tweet_like" value="' . $tweet->GetTweetLike() . '">
+                                <button type="submit" name="likeBtn"><3</button>
+                            </form>
+                        ';
 
                     if ($_SESSION['ProfileGateway']['login'] === $params['profile']->GetLogin())
                     {
-                        $login = $params['profile']->GetLogin();
 
                         echo '
                             <form action="/twitter/profile/' . $login . '/tweet/delete" method="POST">
                                 <input name="_method" type="hidden" value="DELETE" />
                                 <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
-                                <button type="submit" name="delBtn">Delete</button>
+                                <button type="submit" name="delBtn">DELETE</button>
                             </form>
                         ';
                     }
 
-                    echo '<br><br>';
+                    echo '<br>';
                 }
             ?>
         <?php endif ?>
