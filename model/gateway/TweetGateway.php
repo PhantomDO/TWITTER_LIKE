@@ -115,23 +115,165 @@ class TweetGateway
         if (!$executed) throw new \Error('Delete failed');
     }
 
-    public function UpdateTweet($id) : void
+    public function UpdateTweet($id, $userid) : void
     {
-        if (!$this->tweet_id) throw new \Error('Instance does not exist in base');
+        if (!$this->tweet_id || !$userid) throw new \Error('Instance does not exist in base');
 
         $query = $this->conn->prepare('
-        UPDATE tweet SET tweet_like_count = :tweet_like_count, tweet_rt_count = :tweet_rt_count
-        WHERE tweet_user_id = :user_id AND tweet_id = :tweet_id
+        UPDATE tweet SET tweet_like_count = :tweet_like, tweet_rt_count = :tweet_rt
+        WHERE tweet_user_id = :tweet_user_id AND tweet_id = :tweet_id
         ');
         $executed = $query->execute([
             ':tweet_user_id' => $this->user_id,
             ':tweet_id' => $id,
 
-            ':tweet_like_count' => $this->tweet_like ?? null,
-            ':tweet_rt_count' => $this->tweet_rt ?? null
+            ':tweet_like' => $this->NumberOfLike($id),
+            ':tweet_rt' => $this->NumberOfRt($id)
         ]);
 
+        //var_dump($executed);
+
         if (!$executed) throw new \Error('Update failed');
+    }
+
+    public function NumberOfRt($id)
+    {
+        $query = $this->conn->prepare('
+        SELECT COUNT(rt.tweet_id) FROM rt
+        WHERE rt.tweet_id like :tweet_id
+        ');
+        $executed = $query->execute([
+            ':tweet_id' => $id
+        ]);
+
+        $element = $query->fetch(\PDO::FETCH_ASSOC);
+
+        //var_dump($element);
+
+        if ($element === 0 || $element === null) return 0;
+        else return $element['COUNT(rt.tweet_id)'];
+    }
+
+    public function InsertRt($id) : void
+    {
+        $query = $this->conn->prepare('
+        INSERT INTO rt (user_id, tweet_id) 
+        VALUES (:user_id, :tweet_id)
+        ');
+        $executed = $query->execute([
+            ':user_id' => $_SESSION['ProfileGateway']['id'],
+            ':tweet_id' => $id
+        ]);
+        //var_dump($executed);
+        if (!$executed) throw new \Error('Insert failed');
+
+        //$this->id = $this->conn->lastInsertId();
+    }
+
+    public function DeleteRt($id) : void
+    {
+        if (!$this->user_id) throw new \Error('Instance does not exist in base');
+
+        $query = $this->conn->prepare('
+        DELETE FROM rt WHERE user_id = :user_id AND tweet_id = :tweet_id
+        ');
+        $executed = $query->execute([
+            ':user_id' => $_SESSION['ProfileGateway']['id'],
+            ':tweet_id' => $id
+        ]);
+
+        //var_dump($executed);
+        if (!$executed) throw new \Error('Delete failed');
+    }
+
+    public function IsRt($id)
+    {
+        //if (!$this->user_id) throw new \Error('Instance does not exist in base');
+        //var_dump($this->user_id);
+        $query = $this->conn->prepare('
+        SELECT rt.user_id, rt.tweet_id FROM rt
+        WHERE rt.tweet_id like :tweet_id
+        AND rt.user_id like :user_id
+        ');
+
+        $executed = $query->execute([
+            ':user_id' => $_SESSION['ProfileGateway']['id'],
+            ':tweet_id' => $id
+        ]);
+
+        $element = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if (!$element) false;
+        else return true;
+    }
+
+    public function NumberOfLike($id)
+    {
+        $query = $this->conn->prepare('
+        SELECT COUNT(likes.tweet_id) FROM likes
+        WHERE likes.tweet_id like :tweet_id
+        ');
+        $executed = $query->execute([
+            ':tweet_id' => $id
+        ]);
+
+        $element = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if ($element === 0 || $element === null) return 0;
+        else return $element['COUNT(likes.tweet_id)'];
+    }
+
+    public function InsertLike($id) : void
+    {
+        $query = $this->conn->prepare('
+        INSERT INTO likes (user_id, tweet_id) 
+        VALUES (:user_id, :tweet_id)
+        ');
+        $executed = $query->execute([
+            ':user_id' => $_SESSION['ProfileGateway']['id'],
+            ':tweet_id' => $id
+        ]);
+        //var_dump($executed);
+        if (!$executed) throw new \Error('Insert failed');
+
+        //$this->id = $this->conn->lastInsertId();
+    }
+
+    public function DeleteLike($id) : void
+    {
+        if (!$this->user_id) throw new \Error('Instance does not exist in base');
+
+        $query = $this->conn->prepare('
+        DELETE FROM likes WHERE user_id = :user_id AND tweet_id = :tweet_id
+        ');
+        $executed = $query->execute([
+            ':user_id' => $_SESSION['ProfileGateway']['id'],
+            ':tweet_id' => $id
+        ]);
+
+        //var_dump($executed);
+        if (!$executed) throw new \Error('Delete failed');
+    }
+
+    public function IsLiked($id)
+    {
+        //if (!$this->user_id) throw new \Error('Instance does not exist in base');
+        //var_dump($this->user_id);
+        $query = $this->conn->prepare('
+        SELECT likes.user_id, likes.tweet_id FROM likes
+        WHERE likes.tweet_id like :tweet_id
+        AND likes.user_id like :user_id
+        ');
+
+        $executed = $query->execute([
+            ':user_id' => $_SESSION['ProfileGateway']['id'],
+            ':tweet_id' => $id
+        ]);
+
+        $element = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if (!$element) false;
+        else return true;
     }
 
     public function Hydrate(Array $element)
@@ -139,8 +281,8 @@ class TweetGateway
         $this->tweet_id = $element['tweet_id'] ?? null;
         $this->tweet_date = $element['tweet_date'] ?? null;
         $this->tweet_text = $element['tweet_text'] ?? null;
-        $this->tweet_like = $element['tweet_like'] ?? null;
-        $this->tweet_rt = $element['tweet_rt'] ?? null;
+        $this->tweet_like = $element['tweet_like'] ?? $element['tweet_like_count'] ?? null;
+        $this->tweet_rt = $element['tweet_rt'] ?? $element['tweet_rt_count'] ?? null;
         $this->user_id = $element['tweet_user_id'] ?? null;
     }
 }

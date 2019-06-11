@@ -93,7 +93,7 @@ class ProfileController extends ControllerBase
         try { // on utilise un try catch pour renvoyer vers une erreur si la requête n'a pas fonctionné
             $element = [
                 'login' => $_POST['login'],
-                'user_id' => $_SESSION['ProfileGateway']['id'],
+                'user_id' => $_POST['user_id'],
                 'id' => $_POST['id']
             ];
 
@@ -101,6 +101,7 @@ class ProfileController extends ControllerBase
             $profile->Hydrate($element);
             //var_dump($profile);
             $follow = $profile->UserIsFollowing($profile->GetId());
+            //var_dump($follow);
 
             if (!$follow)
                 $result = $profile->InsertFollower($profile->GetId());
@@ -135,7 +136,7 @@ class ProfileController extends ControllerBase
                 'tweet_id' => $_POST['tweet_id'] ?? null,
                 'tweet_text' => $_POST['tweet_text'] ?? null,
             ];
-            var_dump($element);
+            //var_dump($element);
             $profile = new TweetGateway($this->app);
             $profile->Hydrate($element);
 
@@ -166,17 +167,34 @@ class ProfileController extends ControllerBase
 
         try { // on utilise un try catch pour renvoyer vers une erreur si la requête n'a pas fonctionné
             $element = [
-                'user_id' => $_SESSION['ProfileGateway']['id'],
+                'tweet_user_id' => $_POST['tweet_user_id'] ?? $_SESSION['ProfileGateway']['id'],
                 'tweet_id' => $_POST['tweet_id'] ?? null,
-                ':tweet_like_count' => $_POST['tweet_like'] ?? null,
-                ':tweet_rt_count' => $_POST['tweet_rt'] ?? null
+                'tweet_like' => $_POST['tweet_like'] ?? null,
+                'tweet_rt' => $_POST['tweet_rt'] ?? null
             ];
 
             $profile = new TweetGateway($this->app);
             $profile->Hydrate($element);
 
-            if ($rt || $like)
-                $result = $profile->UpdateTweet($profile->GetTweetId());
+            if ($rt)
+            {
+                $isRt = $profile->IsRt($profile->GetTweetId());
+                if (!$isRt)
+                    $profile->InsertRt($profile->GetTweetId());
+                else
+                    $profile->DeleteRt($profile->GetTweetId());
+            }
+
+            if ($like)
+            {
+                $isLiked = $profile->IsLiked($profile->GetTweetId());
+                if (!$isLiked)
+                    $profile->InsertLike($profile->GetTweetId());
+                else
+                    $profile->DeleteLike($profile->GetTweetId());
+            }
+
+            $result =$profile->UpdateTweet($profile->GetTweetId(), $profile->GetUserId());
         } catch (\Exception $e) {
             $render = $this->app->getService('render');
             $tweet = false;
@@ -184,9 +202,20 @@ class ProfileController extends ControllerBase
         }
 
         if ($rt)
-            print_r("Rt");
-        else if ($like)
-            print_r("Like");
+        {
+            if (!$isRt)
+                print_r("Rt");
+            else
+                print_r('Undo rt');
+        }
+
+        if ($like)
+        {
+            if (!$isLiked)
+                print_r("Like");
+            else
+                print_r('Undo Like');
+        }
         //Set Refresh header using PHP.
         header( "refresh:0;url=http://localhost/twitter/profile/" . $_SESSION['ProfileGateway']['login']);
     }

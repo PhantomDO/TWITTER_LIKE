@@ -45,6 +45,7 @@ class TimelineFinder
         $tweet = null;
         foreach ($element as $e)
         {
+            //var_dump($e);
             $tweet = new TweetGateway($this->app);
             $tweet->Hydrate($e);
 

@@ -119,7 +119,7 @@ class ProfileGateway
     public function UserIsFollowing($id)
     {
         //if (!$this->user_id) throw new \Error('Instance does not exist in base');
-
+        //var_dump($this->user_id);
         $query = $this->conn->prepare('
         SELECT followers.user_id, followers.follower_id FROM followers
         WHERE followers.follower_id like :follower_id
@@ -127,7 +127,7 @@ class ProfileGateway
         ');
 
         $executed = $query->execute([
-            ':user_id' => $this->user_id,
+            ':user_id' => $this->user_id ?? $_SESSION['ProfileGateway']['id'],
             ':follower_id' => $id
         ]);
 
@@ -212,6 +212,6 @@ class ProfileGateway
         $this->login = $element['login'] ?? null;
         $this->password = $element['password'] ?? null;
         $this->adress = $element['adress'] ?? null;
-        $this->user_id = $_SESSION['ProfileGateway']['id'] ?? null;
+        $this->user_id = $element['user_id'] ?? null;
     }
 }

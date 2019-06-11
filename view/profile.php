@@ -14,7 +14,6 @@
         Name of the guy: <?= $params['profile']->GetLogin(); ?>
 
         <?php if ($_SESSION['ProfileGateway']['login'] != $params['profile']->GetLogin()):?>
-
             <?php if(!$params['follow']):?>
                 <p>
                     <form action="/twitter/profile/<?php if(isset($params['profile'])) echo $params['profile']->GetLogin();?>/follow" method="POST">
@@ -122,6 +121,7 @@
             <?php
                 foreach ($params['timeline'] as $tweet)
                 {
+                    //var_dump($tweet);
                     echo '---------------------------------------------------------------------------- <br>';
                     $login = $params['profile']->GetLogin();
                     echo $tweet->GetTweetText() . '<br>' . $tweet->GetTweetDate() . '<br>';
@@ -131,7 +131,8 @@
                             <form action="/twitter/profile/' . $login . '/tweet/update/rt" method="POST">
                                 <input name="_method" type="hidden" value="PUT" />
                                 <input type="hidden" name="tweet_rt" value="' . $tweet->GetTweetRt() . '">
-                                <button type="submit" name="rtBtn">RT</button>
+                                <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
+                                <button type="submit" name="rtBtn">RT</button> ' . $tweet->NumberOfRt($tweet->GetTweetId()) . '
                             </form>
                         ';
 
@@ -139,7 +140,8 @@
                             <form action="/twitter/profile/' . $login . '/tweet/update/like" method="POST">
                                 <input name="_method" type="hidden" value="PUT" />
                                 <input type="hidden" name="tweet_like" value="' . $tweet->GetTweetLike() . '">
-                                <button type="submit" name="likeBtn"><3</button>
+                                <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
+                                <button type="submit" name="likeBtn"><3</button> ' . $tweet->NumberOfLike($tweet->GetTweetId()) . '
                             </form>
                         ';
 
