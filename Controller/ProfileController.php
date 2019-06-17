@@ -23,7 +23,7 @@ class ProfileController extends ControllerBase
     public function Home()
     {
         $render = $this->app->getService('render');
-        $render('home');
+        $render('Home');
     }
 
     public function ProfileHandler($name, $settings, $tweet)
@@ -42,7 +42,7 @@ class ProfileController extends ControllerBase
         $delete = false;
 
         $render = $this->app->getService('render');
-        $render('profile',
+        $render('Profile',
         [
                 'profile' => $profile,
                 'settings' => $settings,
@@ -110,7 +110,7 @@ class ProfileController extends ControllerBase
 
         } catch (\Exception $e) {
             $render = $this->app->getService('render');
-            $render('profile',['error' => $e, 'profile' => $profile, 'follow' => $follow]); // On renvoie la city acutelle au template
+            $render('Profile',['error' => $e, 'profile' => $profile, 'follow' => $follow]); // On renvoie la city acutelle au template
         }
 
         if (!$follow)
@@ -119,7 +119,7 @@ class ProfileController extends ControllerBase
             print_r("Vous ne suivez plus : ". $profile->GetLogin());
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://localhost/Twitter/profile/" . $profile->GetLogin());
+        header( "refresh:2;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/Twitter/profile/" . $profile->GetLogin());
     }
 
     public function ProfileTweetHandlerUpdate($name, $delete)
@@ -147,7 +147,7 @@ class ProfileController extends ControllerBase
         } catch (\Exception $e) {
             $render = $this->app->getService('render');
             $tweet = false;
-            $render('profile',['error' => $e, 'profile' => $profile, 'tweet' => $tweet, 'delete' => $delete]); // On renvoie la city acutelle au template
+            $render('Profile',['error' => $e, 'profile' => $profile, 'tweet' => $tweet, 'delete' => $delete]); // On renvoie la city acutelle au template
         }
 
         if (!$delete)
@@ -155,7 +155,7 @@ class ProfileController extends ControllerBase
         else
             print_r("Delete");
         //Set Refresh header using PHP.
-        header( "refresh:0;url=http://localhost/Twitter/profile/" . $_SESSION['ProfileGateway']['login']);
+        header( "refresh:0;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/Twitter/profile/" . $_SESSION['ProfileGateway']['login']);
     }
 
     public function ProfileTweetSocialHandlerUpdate($name, $rt, $like)
@@ -198,7 +198,7 @@ class ProfileController extends ControllerBase
         } catch (\Exception $e) {
             $render = $this->app->getService('render');
             $tweet = false;
-            $render('profile',['error' => $e, 'profile' => $profile, 'tweet' => $tweet, 'rt' => $rt, 'like' => $rt]); // On renvoie la city acutelle au template
+            $render('Profile',['error' => $e, 'profile' => $profile, 'tweet' => $tweet, 'rt' => $rt, 'like' => $rt]); // On renvoie la city acutelle au template
         }
 
         if ($rt)
@@ -217,13 +217,13 @@ class ProfileController extends ControllerBase
                 print_r('Undo Like');
         }
         //Set Refresh header using PHP.
-        header( "refresh:0;url=http://localhost/Twitter/profile/" . $_SESSION['ProfileGateway']['login']);
+        header( "refresh:0;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/Twitter/profile/" . $_SESSION['ProfileGateway']['login']);
     }
 
     public function Login()
     {
         $render = $this->app->getService('render');
-        $render('login');
+        $render('Login');
     }
 
     public function CheckExistingLogin()
@@ -239,24 +239,24 @@ class ProfileController extends ControllerBase
             $result = $profile->Login();
         } catch (\Exception $e) {
             $render = $this->app->getService('render');
-            $render('login',['error' => $e, 'profile' => $profile]); // On renvoie la profile acutelle au template
+            $render('Login',['error' => $e, 'profile' => $profile]); // On renvoie la profile acutelle au template
             print_r("Impossible de se connecter.");
         } catch (\Error $e) {
             $render = $this->app->getService('render');
-            $render('login',['error' => $e, 'profile' => $profile]); // On renvoie la profile acutelle au template
+            $render('Login',['error' => $e, 'profile' => $profile]); // On renvoie la profile acutelle au template
             print_r("Impossible de se connecter.");
         }
 
         print_r("Conexion etabli");
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://localhost/Twitter/timeline");
+        header( "refresh:2;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/Twitter/timeline");
     }
 
     public function Register()
     {
         $render = $this->app->getService('render');
-        $render('register');
+        $render('Register');
     }
 
     public function RegisterMember()
@@ -272,12 +272,12 @@ class ProfileController extends ControllerBase
             $result = $profile->Insert();
         } catch (\Exception $e) {
             $render = $this->app->getService('render');
-            $render('register',['error' => $e, 'profile' => $profile]); // On renvoie la profile acutelle au template
+            $render('Register',['error' => $e, 'profile' => $profile]); // On renvoie la profile acutelle au template
         }
 
         print_r("New profile has been sucessfully created");
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://localhost/Twitter/login" );
+        header( "refresh:2;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/Twitter/login" );
     }
 }

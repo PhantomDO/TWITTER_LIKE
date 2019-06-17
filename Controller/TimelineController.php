@@ -42,7 +42,7 @@ class TimelineController extends ControllerBase
         //die;
         //var_dump($followers);
         $render = $this->app->getService('render');
-        $render('timeline',
+        $render('Timeline',
         [
                 'timeline' => $timelines,
                 'services' => $services
