@@ -39,7 +39,7 @@ $app->setService('render', function (string $template, Array $params = [])
     }
 
     ob_start();
-    include __DIR__ . '/../View/' . $template . '.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/View/' . $template . '.php';
     ob_end_flush();
     die();
 });
