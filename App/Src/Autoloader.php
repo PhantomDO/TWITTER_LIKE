@@ -23,6 +23,7 @@ class Autoloader
     {
         $namespace = explode('\\', $class);
         $class = implode('/', $namespace);
+        var_dump($_SERVER['DOCUMENT_ROOT']);
         require_once ($_SERVER['DOCUMENT_ROOT'] . '/' . $class . '.php');
     }
 }
