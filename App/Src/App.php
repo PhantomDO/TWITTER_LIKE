@@ -8,8 +8,8 @@
 
 namespace App\Src;
 
-use app\src\route\Route;
-use app\src\ServiceContainer\ServiceContainer;
+use App\Src\Route\Route;
+use App\Src\ServiceContainer\ServiceContainer;
 
 class App
 {
