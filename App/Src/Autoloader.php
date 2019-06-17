@@ -12,7 +12,7 @@ namespace app\src;
 class Autoloader
 {
     /**
-     * Met en lace es differets autoloader de l'app php
+     * Met en lace es differets autoloader de l'App php
      */
     public static function Register()
     {
@@ -22,10 +22,7 @@ class Autoloader
     public static function Autoload(string $class)
     {
         $namespace = explode('\\', $class);
-        $namespace = array_map('strtolower', $namespace);
-        $i = count($namespace) - 1;
-        $namespace[$i] = ucfirst($namespace[$i]);
         $class = implode('/', $namespace);
-        require_once '..' . '/' . $class . '.php';
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/' . $class . '.php';
     }
 }

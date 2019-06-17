@@ -11,7 +11,7 @@ use app\src\App;
 use database\Database;
 use model\gateway\ProfileGateway;
 
-//use model\finder\FinderInterface;
+//use Model\Finder\FinderInterface;
 
 class ProfileFinder
 {
@@ -28,7 +28,7 @@ class ProfileFinder
     public function __construct(App $app)
     {
         $this->app = $app;
-        $this->conn = $this->app->getService('database')->getConnection();
+        $this->conn = $this->app->getService('Database')->getConnection();
     }
 
     public function FindOneByName($name)

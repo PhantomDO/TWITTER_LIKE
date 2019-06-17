@@ -128,7 +128,7 @@
                     echo '<input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">';
 
                     echo '
-                            <form action="/twitter/profile/' . $login . '/tweet/update/rt" method="POST">
+                            <form action="/Twitter/profile/' . $login . '/tweet/update/rt" method="POST">
                                 <input name="_method" type="hidden" value="PUT" />
                                 <input type="hidden" name="tweet_rt" value="' . $tweet->GetTweetRt() . '">
                                 <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
@@ -137,7 +137,7 @@
                         ';
 
                     echo '
-                            <form action="/twitter/profile/' . $login . '/tweet/update/like" method="POST">
+                            <form action="/Twitter/profile/' . $login . '/tweet/update/like" method="POST">
                                 <input name="_method" type="hidden" value="PUT" />
                                 <input type="hidden" name="tweet_like" value="' . $tweet->GetTweetLike() . '">
                                 <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
@@ -149,7 +149,7 @@
                     {
 
                         echo '
-                            <form action="/twitter/profile/' . $login . '/tweet/delete" method="POST">
+                            <form action="/Twitter/profile/' . $login . '/tweet/delete" method="POST">
                                 <input name="_method" type="hidden" value="DELETE" />
                                 <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
                                 <button type="submit" name="delBtn">DELETE</button>

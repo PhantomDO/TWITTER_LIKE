@@ -15,8 +15,8 @@
                    </p>
                 ";
             echo "
-            <a href='/twitter/register'><button type=\"submit\">Yes</button></a>
-            <a href='/twitter/'><button type=\"submit\">No</button></a>
+            <a href='/Twitter/register'><button type=\"submit\">Yes</button></a>
+            <a href='/Twitter/'><button type=\"submit\">No</button></a>
             ";
         }
         ?>

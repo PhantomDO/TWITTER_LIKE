@@ -58,7 +58,7 @@ class App
     }
 
     /**
-     * Create a route for HTTP verb GET
+     * Create a Route for HTTP verb GET
      * @param string $pattern
      * @param callable $callable
      * @return App $this
@@ -93,7 +93,7 @@ class App
 
 
     /**
-     * Check which route to use inside the router
+     * Check which Route to use inside the router
      * @throws HttpException
      */
     public function Run()
@@ -103,7 +103,7 @@ class App
          * TODO: override de la var $method en lui donnant la nouvelle $method dans le champ caché du formulaire
          */
         $method = $_SERVER['REQUEST_METHOD'] ?? self::GET;
-        $uri = substr($_SERVER['REQUEST_URI'], 8) ?? '/';
+        $uri = $_SERVER['REQUEST_URI'] ?? '/';
 
         if(isset($_POST['_method']))
         {
@@ -125,7 +125,7 @@ class App
             }
         }
 
-        throw new \Error('No route available for this uri');
+        throw new \Error('No Route available for this uri');
     }
 
     /**
@@ -150,7 +150,7 @@ class App
     }
 
     /**
-     * Register a route in the routes array
+     * Register a Route in the routes array
      * @param string $method
      * @param string $pattern
      * @param callable $callable

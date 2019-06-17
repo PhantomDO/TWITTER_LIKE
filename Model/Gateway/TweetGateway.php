@@ -26,7 +26,7 @@ class TweetGateway
 
     public function __construct(App $app)
     {
-        $this->conn = $app->getService('database')->getConnection();
+        $this->conn = $app->getService('Database')->getConnection();
     }
 
     public function GetUserId()

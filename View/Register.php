@@ -14,7 +14,7 @@
                    </p>
                 ";
             echo "
-            <a href='/twitter/'><button type=\"submit\">Home</button></a>            
+            <a href='/Twitter/'><button type=\"submit\">Home</button></a>            
             ";
         }
         ?>

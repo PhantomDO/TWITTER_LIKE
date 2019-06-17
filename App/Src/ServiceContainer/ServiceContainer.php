@@ -11,7 +11,7 @@ namespace app\src\ServiceContainer;
 class ServiceContainer
 {
     /**
-     * COntains all the services of the php app
+     * COntains all the services of the php App
      * @var array
      */
     private $container = array();

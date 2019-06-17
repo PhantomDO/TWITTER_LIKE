@@ -80,7 +80,7 @@ class ProfileController extends ControllerBase
         print_r("Modification réussite.");
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://localhost/twitter/profile/" . $profile->GetLogin());
+        header( "refresh:2;url=http://localhost/Twitter/profile/" . $profile->GetLogin());
     }
 
     public function ProfileFollowHandlerUpdate($name)
@@ -119,7 +119,7 @@ class ProfileController extends ControllerBase
             print_r("Vous ne suivez plus : ". $profile->GetLogin());
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://localhost/twitter/profile/" . $profile->GetLogin());
+        header( "refresh:2;url=http://localhost/Twitter/profile/" . $profile->GetLogin());
     }
 
     public function ProfileTweetHandlerUpdate($name, $delete)
@@ -155,7 +155,7 @@ class ProfileController extends ControllerBase
         else
             print_r("Delete");
         //Set Refresh header using PHP.
-        header( "refresh:0;url=http://localhost/twitter/profile/" . $_SESSION['ProfileGateway']['login']);
+        header( "refresh:0;url=http://localhost/Twitter/profile/" . $_SESSION['ProfileGateway']['login']);
     }
 
     public function ProfileTweetSocialHandlerUpdate($name, $rt, $like)
@@ -217,7 +217,7 @@ class ProfileController extends ControllerBase
                 print_r('Undo Like');
         }
         //Set Refresh header using PHP.
-        header( "refresh:0;url=http://localhost/twitter/profile/" . $_SESSION['ProfileGateway']['login']);
+        header( "refresh:0;url=http://localhost/Twitter/profile/" . $_SESSION['ProfileGateway']['login']);
     }
 
     public function Login()
@@ -250,7 +250,7 @@ class ProfileController extends ControllerBase
         print_r("Conexion etabli");
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://localhost/twitter/timeline");
+        header( "refresh:2;url=http://localhost/Twitter/timeline");
     }
 
     public function Register()
@@ -278,6 +278,6 @@ class ProfileController extends ControllerBase
         print_r("New profile has been sucessfully created");
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://localhost/twitter/login" );
+        header( "refresh:2;url=http://localhost/Twitter/login" );
     }
 }

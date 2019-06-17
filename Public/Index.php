@@ -10,8 +10,8 @@ use app\src\Autoloader;
 
 session_start();
 
-require_once  __DIR__ . '/../app/src/Autoloader.php';
+require_once __DIR__ . '/../App/Src/Autoloader.php';
 Autoloader::Register();
 
-$app = require_once __DIR__ . '/../app/bootstrap.php';
+$app = require_once __DIR__ . '/../App/Bootstrap.php';
 $app->Run();

@@ -17,12 +17,17 @@ use model\finder\TimelineFinder;
 $container = new ServiceContainer();
 $app = new App($container);
 
-$app->setService('database', new Database(
-    'bmwl6cwh5kmqtvmnydhg-mysql.services.clever-cloud.com', // Addresse de la base de données
+$app->setService('Database', new Database(
+/*    'bmwl6cwh5kmqtvmnydhg-mysql.services.clever-cloud.com', // Addresse de la base de données
     'bmwl6cwh5kmqtvmnydhg', // Nom de la base de donnée
     'urn18higmxg4dzik', // Utilisateur de la base de données
     'ZQjPvkj23t5VjBVJbVmo', // Mot de passe de la base de données
-    '3306'
+    '3306'*/
+    getenv('MYSQL_ADDON_HOST'),
+    getenv('MYSQL_ADDON_DB'),
+    getenv('MYSQL_ADDON_USER'),
+    getenv('MYSQL_ADDON_PASSWORD'),
+    getenv('MYSQL_ADDON_PORT')
 ));
 
 
@@ -34,7 +39,7 @@ $app->setService('render', function (string $template, Array $params = [])
     }
 
     ob_start();
-    include __DIR__ . '/../view/' . $template . '.php';
+    include __DIR__ . '/../View/' . $template . '.php';
     ob_end_flush();
     die();
 });

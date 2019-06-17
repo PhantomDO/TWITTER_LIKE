@@ -11,7 +11,7 @@ use app\src\App;
 use database\Database;
 use model\gateway\TweetGateway;
 
-//use model\finder\FinderInterface;
+//use Model\Finder\FinderInterface;
 
 class TimelineFinder
 {
@@ -28,7 +28,7 @@ class TimelineFinder
     public function __construct(App $app)
     {
         $this->app = $app;
-        $this->conn = $this->app->getService('database')->getConnection();
+        $this->conn = $this->app->getService('Database')->getConnection();
     }
 
     public function TimelineTweetUserId($id)
