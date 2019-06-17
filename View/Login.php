@@ -15,13 +15,13 @@
                    </p>
                 ";
             echo "
-            <a href='/Twitter/register'><button type=\"submit\">Yes</button></a>
-            <a href='/Twitter/'><button type=\"submit\">No</button></a>
+            <a href='/register'><button type=\"submit\">Yes</button></a>
+            <a href='/'><button type=\"submit\">No</button></a>
             ";
         }
         ?>
 
-        <form action="/Twitter/handleLogin" method="POST"
+        <form action="/handleLogin" method="POST"
             <?php if (isset($params['error'])) echo "<p style='display: none'>"; ?>>
             <p>
                 <label>Login</label>

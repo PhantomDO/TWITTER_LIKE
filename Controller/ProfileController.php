@@ -119,7 +119,7 @@ class ProfileController extends ControllerBase
             print_r("Vous ne suivez plus : ". $profile->GetLogin());
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/Twitter/profile/" . $profile->GetLogin());
+        header( "refresh:2;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/profile/" . $profile->GetLogin());
     }
 
     public function ProfileTweetHandlerUpdate($name, $delete)
@@ -155,7 +155,7 @@ class ProfileController extends ControllerBase
         else
             print_r("Delete");
         //Set Refresh header using PHP.
-        header( "refresh:0;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/Twitter/profile/" . $_SESSION['ProfileGateway']['login']);
+        header( "refresh:0;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/profile/" . $_SESSION['ProfileGateway']['login']);
     }
 
     public function ProfileTweetSocialHandlerUpdate($name, $rt, $like)
@@ -217,7 +217,7 @@ class ProfileController extends ControllerBase
                 print_r('Undo Like');
         }
         //Set Refresh header using PHP.
-        header( "refresh:0;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/Twitter/profile/" . $_SESSION['ProfileGateway']['login']);
+        header( "refresh:0;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/profile/" . $_SESSION['ProfileGateway']['login']);
     }
 
     public function Login()
@@ -250,7 +250,7 @@ class ProfileController extends ControllerBase
         print_r("Conexion etabli");
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/Twitter/timeline");
+        header( "refresh:2;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/timeline");
     }
 
     public function Register()
@@ -278,6 +278,6 @@ class ProfileController extends ControllerBase
         print_r("New profile has been sucessfully created");
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/Twitter/login" );
+        header( "refresh:2;url=http://" . $_SERVER['DOCUMENT_ROOT']. "/login" );
     }
 }

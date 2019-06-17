@@ -14,12 +14,12 @@
                    </p>
                 ";
             echo "
-            <a href='/Twitter/'><button type=\"submit\">Home</button></a>            
+            <a href='/'><button type=\"submit\">Home</button></a>            
             ";
         }
         ?>
 
-        <form action="/Twitter/handleRegister" method="POST"
+        <form action="/handleRegister" method="POST"
             <?php if (isset($params['error']))
             {
                 echo "<p style='display: none'>";

@@ -16,7 +16,7 @@
         <?php if ($_SESSION['ProfileGateway']['login'] != $params['profile']->GetLogin()):?>
             <?php if(!$params['follow']):?>
                 <p>
-                    <form action="/Twitter/profile/<?php if(isset($params['profile'])) echo $params['profile']->GetLogin();?>/follow" method="POST">
+                    <form action="/profile/<?php if(isset($params['profile'])) echo $params['profile']->GetLogin();?>/follow" method="POST">
                         <input name="_method" type="hidden" value="PUT" />
                         <input type="hidden" name="login" value="<?php if(isset($params['profile'])) echo $params['profile']->GetLogin(); ?>">
                         <input type="hidden" name="user_id" value="<?php if(isset($_SESSION['ProfileGateway'])) echo $_SESSION['ProfileGateway']['id']; ?>">
@@ -28,7 +28,7 @@
 
             <?php if ($params['follow']):?>
                 <p>
-                    <form action="/Twitter/profile/<?php if(isset($params['profile'])) echo $params['profile']->GetLogin();?>/unfollow" method="POST">
+                    <form action="/profile/<?php if(isset($params['profile'])) echo $params['profile']->GetLogin();?>/unfollow" method="POST">
                         <input name="_method" type="hidden" value="DELETE" />
                         <input type="hidden" name="login" value="<?php if(isset($params['profile'])) echo $params['profile']->GetLogin(); ?>">
                         <input type="hidden" name="user_id" value="<?php if(isset($_SESSION['ProfileGateway'])) echo $_SESSION['ProfileGateway']['id']; ?>">
@@ -43,7 +43,7 @@
         <?php if($_SESSION['ProfileGateway']['login'] === $params['profile']->GetLogin()):?>
             <?php if ($params['settings'] === false):?>
                 <p>
-                    <a href='/Twitter/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/settings'>
+                    <a href='/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/settings'>
                         <button type="submit">Espace Personnel</button>
                     </a>
                 </p>
@@ -53,7 +53,7 @@
                 <p>
                     Password: <?= $params['profile']->GetPassword(); ?>
                     Adress: <?= $params['profile']->GetAdress(); ?>
-                    <form action="/Twitter/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/settings/save" method="POST">
+                    <form action="/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/settings/save" method="POST">
                         <input name="_method" type="hidden" value="PUT" />
                         <p>
                             <label>Login</label>
@@ -81,7 +81,7 @@
 
             <?php if ($params['tweet'] === false):?>
                 <p>
-                    <a href='/Twitter/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/tweet'>
+                    <a href='/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/tweet'>
                         <button type="submit">Tweet</button>
                     </a>
                 </p>
@@ -89,7 +89,7 @@
 
             <?php if ($params['tweet'] === true):?>
                 <p>
-                    <form action="/Twitter/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/tweet/post" method="POST">
+                    <form action="/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/tweet/post" method="POST">
                         <input name="_method" type="hidden" value="PUT" />
                         <p>
                             <label>Box de tweet</label>
@@ -107,7 +107,7 @@
                         ?>
 
                         <p>
-                            <a href='/Twitter/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/tweet/post'>
+                            <a href='/profile/<?php if(isset($_SESSION['ProfileGateway']['login'])) echo $_SESSION['ProfileGateway']['login'];?>/tweet/post'>
                                 <button type="submit">Tweet</button>
                             </a>
                         </p>
@@ -128,7 +128,7 @@
                     echo '<input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">';
 
                     echo '
-                            <form action="/Twitter/profile/' . $login . '/tweet/update/rt" method="POST">
+                            <form action="/profile/' . $login . '/tweet/update/rt" method="POST">
                                 <input name="_method" type="hidden" value="PUT" />
                                 <input type="hidden" name="tweet_rt" value="' . $tweet->GetTweetRt() . '">
                                 <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
@@ -137,7 +137,7 @@
                         ';
 
                     echo '
-                            <form action="/Twitter/profile/' . $login . '/tweet/update/like" method="POST">
+                            <form action="/profile/' . $login . '/tweet/update/like" method="POST">
                                 <input name="_method" type="hidden" value="PUT" />
                                 <input type="hidden" name="tweet_like" value="' . $tweet->GetTweetLike() . '">
                                 <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
@@ -149,7 +149,7 @@
                     {
 
                         echo '
-                            <form action="/Twitter/profile/' . $login . '/tweet/delete" method="POST">
+                            <form action="/profile/' . $login . '/tweet/delete" method="POST">
                                 <input name="_method" type="hidden" value="DELETE" />
                                 <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
                                 <button type="submit" name="delBtn">DELETE</button>
