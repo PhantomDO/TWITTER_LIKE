@@ -19,7 +19,7 @@
                     $login = $params['services']->getService('profileFinder')->FindOneById($tweet->GetUserId());
                     echo '---------------------------------------------------------------------------- <br>';
 
-                    echo '<a href="/profile/'.$login->GetLogin().'"></a>' . '<br>' . $tweet->GetTweetText() . '<br>' . $tweet->GetTweetDate() . '<br>';
+                    echo '<a href="/profile/'.$login->GetLogin().'">'.$login->GetLogin().'</a>' . '<br>' . $tweet->GetTweetText() . '<br>' . $tweet->GetTweetDate() . '<br>';
 
                     echo '
                         <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
