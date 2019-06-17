@@ -83,6 +83,23 @@ class ProfileController extends ControllerBase
         header( "refresh:2;url=http://app-28a26904-3909-4a49-9120-c242a67c0200.cleverapps.io/profile/" . $profile->GetLogin());
     }
 
+    public function ProfileSearchUser()
+    {
+        $result = null;
+        try { // on utilise un try catch pour renvoyer vers une erreur si la requête n'a pas fonctionné
+            $element = [
+                'login' => $_POST['login'] ?? null,
+            ];
+            //var_dump($element);
+            $profile = new ProfileGateway($this->app);
+            $profile->Hydrate($element);
+            $result = $this->app->getService('profileFinder')->UserSearch($profile->GetLogin());
+        } catch (\Exception $e) {
+            $render = $this->app->getService('render');
+            $render('Search',['error' => $e, 'profile' => $profile, 'search' => $result]); // On renvoie la city acutelle au template
+        }
+    }
+
     public function ProfileFollowHandlerUpdate($name)
     {
         if ($name === null) {

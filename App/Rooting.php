@@ -29,6 +29,12 @@ class Rooting
             $controller->Home();
         });
 
+        $this->app->Get('/search', function () use ($app)
+        {
+            $controller = new ProfileController($app);
+            $controller->ProfileSearchUser();
+        });
+
         $this->app->Get('/timeline', function () use ($app)
         {
             $controller = new TimelineController($app);

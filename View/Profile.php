@@ -94,7 +94,7 @@
                         <p>
                             <label>Box de tweet</label>
                             <input type="text" name="tweet_text">
-                            <input type="text" name="tweet_date" value="<?php $date = date("Y-m-d H:i:s"); echo (string)$date; ?>">
+                            <input type="hidden" name="tweet_date" value="<?php $date = date("Y-m-d H:i:s"); echo (string)$date; ?>">
                             <input type="hidden" name="user_id" value="<?php if(isset($_SESSION['ProfileGateway'])) echo $_SESSION['ProfileGateway']['id']; ?>">
                         </p>
 

@@ -89,4 +89,29 @@ class ProfileFinder
         //var_dump($followers);
         return $followers;
     }
+
+    public function UserSearch($name)
+    {
+        $query = null;
+        if ($name != null)
+        {
+            $query = $this->conn->prepare('
+            SELECT users.login FROM users
+            WHERE users.login like :login'); // Création de la requête + utilisation order by pour ne pas utiliser sort
+            $query->execute([':login' => '%' . $name .  '%' ]); // Exécution de la requête
+        }
+        else
+        {
+            $query = $this->conn->prepare('
+            SELECT users.login FROM users');
+            $query->execute(); // Exécution de la requête
+        }
+
+        $element = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        //var_dump($element);
+        if (count($element) === 0) return null;
+
+        return $element;
+    }
 }

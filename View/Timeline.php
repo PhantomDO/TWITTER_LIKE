@@ -7,6 +7,29 @@
     <title>Timeline</title>
 </p>
 <h1>Timeline</h1>
+
+<p>
+    <form action="/search" method="POST">
+        <p>
+            <input type="text" name="login">
+        </p>
+
+        <?php
+        if(isset($_POST['login']))
+        {
+            $login= $_POST['login'];
+            echo $login;
+        }
+        ?>
+
+        <p>
+            <a href='/search'>
+                <button type="submit">Search</button>
+            </a>
+        </p>
+    </form>
+</p>
+
 <?php if($params['timeline']) :?>
     <?php
         foreach ($params['timeline'] as $timeline)
