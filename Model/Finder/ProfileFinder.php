@@ -5,11 +5,11 @@
  * Date: 15/05/2019
  * Time: 15:04
  */
-namespace model\finder;
+namespace Model\Finder;
 
-use app\src\App;
-use database\Database;
-use model\gateway\ProfileGateway;
+use App\Src\App;
+use Database\Database;
+use Model\Gateway\ProfileGateway;
 
 //use Model\Finder\FinderInterface;
 

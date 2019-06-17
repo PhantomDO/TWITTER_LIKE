@@ -6,11 +6,11 @@
  * Time: 12:01
  */
 
-namespace model\gateway;
+namespace Model\Gateway;
 
-use app\src\App;
-use controller\ProfileController;
-use database\Database;
+use App\Src\App;
+use Controller\ProfileController;
+use Database\Database;
 
 class TweetGateway
 {

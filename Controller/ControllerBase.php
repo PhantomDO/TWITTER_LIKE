@@ -6,9 +6,9 @@
  * Time: 11:19
  */
 
-namespace controller;
+namespace Controller;
 
-use app\src\App;
+use App\Src\App;
 
 abstract class ControllerBase
 {

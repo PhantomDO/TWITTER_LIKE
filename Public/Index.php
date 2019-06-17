@@ -5,8 +5,8 @@
  * Date: 21/03/2019
  * Time: 17:37
  */
-namespace web;
-use app\src\Autoloader;
+namespace Web;
+use App\Src\Autoloader;
 
 session_start();
 

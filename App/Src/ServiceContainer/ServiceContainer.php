@@ -6,7 +6,7 @@
  * Time: 09:34
  */
 
-namespace app\src\ServiceContainer;
+namespace App\Src\ServiceContainer;
 
 class ServiceContainer
 {

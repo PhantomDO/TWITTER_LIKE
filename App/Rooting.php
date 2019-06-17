@@ -1,10 +1,10 @@
 <?php
 
-namespace app;
+namespace App;
 
-use app\src\App;
-use controller\ProfileController;
-use controller\TimelineController;
+use App\Src\App;
+use Controller\ProfileController;
+use Controller\TimelineController;
 
 class Rooting
 {

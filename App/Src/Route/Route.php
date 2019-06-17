@@ -6,7 +6,7 @@
  * Time: 16:30
  */
 
-namespace app\src\route;
+namespace App\Src\Route;
 
 class Route
 {

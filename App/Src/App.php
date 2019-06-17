@@ -6,7 +6,7 @@
  * Time: 16:45
  */
 
-namespace app\src;
+namespace App\Src;
 
 use app\src\route\Route;
 use app\src\ServiceContainer\ServiceContainer;

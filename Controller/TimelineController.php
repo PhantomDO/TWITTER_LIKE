@@ -6,12 +6,12 @@
  * Time: 15:01
  */
 
-namespace controller;
-use controller\ControllerBase;
+namespace Controller;
+use Controller\ControllerBase;
 
-use app\src\App;
-use model\gateway\ProfileGateway;
-use model\gateway\TweetGateway;
+use App\Src\App;
+use Model\Gateway\ProfileGateway;
+use Model\Gateway\TweetGateway;
 
 class TimelineController extends ControllerBase
 {

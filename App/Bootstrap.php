@@ -5,14 +5,14 @@
  * Date: 21/03/2019
  * Time: 17:35
  */
-namespace app;
+namespace App;
 
-use app\src\App;
-use app\Rooting;
-use app\src\ServiceContainer\ServiceContainer;
-use database\Database;
-use model\finder\ProfileFinder;
-use model\finder\TimelineFinder;
+use App\Src\App;
+use App\Rooting;
+use App\Src\ServiceContainer\ServiceContainer;
+use Database\Database;
+use Model\Finder\ProfileFinder;
+use Model\Finder\TimelineFinder;
 
 $container = new ServiceContainer();
 $app = new App($container);
