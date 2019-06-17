@@ -89,8 +89,9 @@ class ProfileController extends ControllerBase
         $render('Search');
     }
 
-    public function ProfileSearchUser($name)
+    public function ProfileSearchUser()
     {
+        $result = null;
         try { // on utilise un try catch pour renvoyer vers une erreur si la requête n'a pas fonctionné
             $element = [
                 'login' => $_POST['login'] ?? null
@@ -101,7 +102,7 @@ class ProfileController extends ControllerBase
             $result = $this->app->getService('profileFinder')->UserSearch($profile->GetLogin());
         } catch (\Exception $e) {
             $render = $this->app->getService('render');
-            $render('Search',['error' => $e, 'profile' => $profile]); // On renvoie la profile acutelle au template
+            $render('Search',['error' => $e, 'profile' => $profile, 'search' => $result]); // On renvoie la profile acutelle au template
             print_r("Personne ne resemble");
         }
     }
