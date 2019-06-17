@@ -13,6 +13,7 @@
         <a href="profile/<?= $params['profile']->GetLogin(); ?>"></a>
         Name of the guy: <?= $params['profile']->GetLogin(); ?>
 
+        <br><br>
         <a href="/timeline">Timeline</a>
         <a href="/search">Search</a>
         <a href="/login">Changer de compte</a>

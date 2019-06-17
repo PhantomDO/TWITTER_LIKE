@@ -8,7 +8,7 @@
 </p>
 <h1>Timeline</h1>
 
-<a href="/search">Search</a>
+<a href="/search">Search</a><br><br>
 
 <?php if($params['timeline']) :?>
     <?php
