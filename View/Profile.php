@@ -13,6 +13,11 @@
         <a href="profile/<?= $params['profile']->GetLogin(); ?>"></a>
         Name of the guy: <?= $params['profile']->GetLogin(); ?>
 
+        <a href="/timeline">Timeline</a>
+        <a href="/search">Search</a>
+        <a href="/login">Changer de compte</a>
+
+
         <?php if ($_SESSION['ProfileGateway']['login'] != $params['profile']->GetLogin()):?>
             <?php if(!$params['follow']):?>
                 <p>
@@ -117,7 +122,7 @@
         <?php endif ?>
 
         <?php if($params['timeline'] != null && ($params['follow'] || $_SESSION['ProfileGateway']['login'] === $params['profile']->GetLogin())):?>
-            <h2>Timeline</h2>
+
             <?php
                 foreach ($params['timeline'] as $tweet)
                 {

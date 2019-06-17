@@ -112,6 +112,14 @@ class ProfileFinder
         //var_dump($element);
         if (count($element) === 0) return null;
 
-        return $element;
+        $followers = [];
+        $follower = null;
+        foreach ($element as $e)
+        {
+            $follower = new ProfileGateway($this->app);
+            $followers[] = $follower;
+        }
+
+        return $followers;
     }
 }

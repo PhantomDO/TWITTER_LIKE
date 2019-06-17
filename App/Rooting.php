@@ -32,6 +32,12 @@ class Rooting
         $this->app->Post('/search', function () use ($app)
         {
             $controller = new ProfileController($app);
+            $controller->SearchHandler();
+        });
+
+        $this->app->Post('/handleSearch/', function () use ($app)
+        {
+            $controller = new ProfileController($app);
             $controller->ProfileSearchUser();
         });
 
