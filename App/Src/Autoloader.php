@@ -19,7 +19,7 @@ class Autoloader
         spl_autoload_register(array(__CLASS__, 'autoload'));
     }
 
-    public static function Autoload(string $class)
+    public static function Autoload($class)
     {
         $namespace = explode('\\', $class);
         $class = implode('/', $namespace);
