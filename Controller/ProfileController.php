@@ -74,7 +74,7 @@ class ProfileController extends ControllerBase
         } catch (\Exception $e) {
             $render = $this->app->getService('render');
             $settings = false;
-            $render('profile',['error' => $e, 'profile' => $profile, 'settings' => $settings]); // On renvoie la city acutelle au template
+            $render('Profile',['error' => $e, 'profile' => $profile, 'settings' => $settings]); // On renvoie la city acutelle au template
         }
 
         print_r("Modification réussite.");

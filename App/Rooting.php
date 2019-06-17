@@ -29,7 +29,7 @@ class Rooting
             $controller->Home();
         });
 
-        $this->app->Get('/search', function () use ($app)
+        $this->app->Post('/search', function () use ($app)
         {
             $controller = new ProfileController($app);
             $controller->ProfileSearchUser();
