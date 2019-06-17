@@ -35,8 +35,8 @@ class TimelineFinder
     {
         $query = $this->conn->prepare('
         SELECT t.tweet_user_id, t.tweet_id, t.tweet_text, t.tweet_date, t.tweet_like_count, t.tweet_rt_count
-        FROM tweet t WHERE t.tweet_user_id like :user_id ORDER BY t.tweet_date DESC'); // Création de la requête + utilisation order by pour ne pas utiliser sort
-        $query->execute([':user_id' => '%' . $id->GetId() .  '%']); // Exécution de la requête
+        FROM tweet t WHERE t.tweet_user_id = :user_id ORDER BY t.tweet_date DESC'); // Création de la requête + utilisation order by pour ne pas utiliser sort
+        $query->execute([':user_id' => $id->GetId()]); // Exécution de la requête
         $element = $query->fetchAll(\PDO::FETCH_ASSOC);
 
         if (count($element) === 0) return null;
@@ -60,8 +60,8 @@ class TimelineFinder
         var_dump($id->GetId());
         $query = $this->conn->prepare('
         SELECT t.tweet_user_id, t.tweet_id, t.tweet_text, t.tweet_date, t.tweet_like_count, t.tweet_rt_count
-        FROM tweet t WHERE t.tweet_user_id like :user_id ORDER BY t.tweet_date DESC'); // Création de la requête + utilisation order by pour ne pas utiliser sort
-        $query->execute([':user_id' => '%' . $id->GetId() .  '%']); // Exécution de la requête
+        FROM tweet t WHERE t.tweet_user_id = :user_id ORDER BY t.tweet_date DESC'); // Création de la requête + utilisation order by pour ne pas utiliser sort
+        $query->execute([':user_id' => $id->GetId()]); // Exécution de la requête
         $element = $query->fetchAll(\PDO::FETCH_ASSOC);
 
         if (count($element) === 0) return null;

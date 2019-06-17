@@ -27,12 +27,19 @@ class TimelineController extends ControllerBase
 
         $timelines = [];
         $timeline = null;
+
         foreach ($followers as $f)
         {
             $timeline = $services->getService('timelineFinder')->TimelineTweetUserId($f);
 
+            //            echo "<pre>";
+            //            print_r($timeline);
+            //            echo "</pre>";
+
             $timelines[] = $timeline;
         }
+
+        //die;
         //var_dump($followers);
         $render = $this->app->getService('render');
         $render('timeline',
