@@ -8,8 +8,8 @@
     <title>Profile</title>
         <p>
             <h1>Home</h1>
-                <a href='/twitter/register'><button type="submit">Register</button></a>
-                <a href='/twitter/login'><button type="submit">Login</button></a>
+                <a href='/Twitter/register'><button type="submit">Register</button></a>
+                <a href='/Twitter/login'><button type="submit">Login</button></a>
 
         </p>
     </body>

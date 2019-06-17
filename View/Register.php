@@ -19,7 +19,7 @@
         }
         ?>
 
-        <form action="/twitter/handleRegister" method="POST"
+        <form action="/Twitter/handleRegister" method="POST"
             <?php if (isset($params['error']))
             {
                 echo "<p style='display: none'>";

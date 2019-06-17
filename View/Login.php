@@ -21,7 +21,7 @@
         }
         ?>
 
-        <form action="/twitter/handleLogin" method="POST"
+        <form action="/Twitter/handleLogin" method="POST"
             <?php if (isset($params['error'])) echo "<p style='display: none'>"; ?>>
             <p>
                 <label>Login</label>
