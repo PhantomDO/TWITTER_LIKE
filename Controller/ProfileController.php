@@ -160,6 +160,8 @@ class ProfileController extends ControllerBase
 
     public function ProfileTweetSocialHandlerUpdate($name, $rt, $like)
     {
+        $url = $_SERVER['REQUEST_URI'];
+
         if ($name === null) {
             $this->Render('404');
             return;
@@ -217,7 +219,7 @@ class ProfileController extends ControllerBase
                 print_r('Undo Like');
         }
         //Set Refresh header using PHP.
-        header( "refresh:0");
+        header( "refresh:0; url=". $url);
     }
 
     public function Login()
