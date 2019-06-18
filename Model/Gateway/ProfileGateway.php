@@ -91,7 +91,7 @@ class ProfileGateway
         VALUES (:user_id, :follower_id)
         ');
         $executed = $query->execute([
-            ':user_id' => $this->user_id,
+            ':user_id' => $this->user_id ?? $_SESSION['ProfileGateway']['id'],
             ':follower_id' => $id
         ]);
         //var_dump($executed);
@@ -108,7 +108,7 @@ class ProfileGateway
         DELETE FROM followers WHERE user_id = :user_id AND follower_id = :follower_id
         ');
         $executed = $query->execute([
-            ':user_id' => $this->user_id,
+            ':user_id' => $this->user_id ?? $_SESSION['ProfileGateway']['id'],
             ':follower_id' => $id
         ]);
 
