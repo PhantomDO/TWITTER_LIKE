@@ -6,7 +6,7 @@
     </head>
     <title>Search</title>
 </p>
-
+<h1>Search</h1>
 <p>
     <form action="/handleSearch" method="POST"
         <?php if (isset($params['error'])) echo "<p style='display: none'>"; ?>>

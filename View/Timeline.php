@@ -30,7 +30,7 @@
                         ';
 
                     echo '
-                            <form action="/profile/' . $login->GetLogin() . '/tweet/update/rt" method="POST">
+                            <form action="/profile/' . mb_strtolower($login->GetLogin()) . '/tweet/update/rt" method="POST">
                                 <input name="_method" type="hidden" value="PUT" />
                                 <input type="hidden" name="tweet_rt" value="' . $tweet->GetTweetRt() . '">
                                 <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
@@ -40,7 +40,7 @@
                         ';
 
                     echo '
-                            <form action="/profile/' . $login->GetLogin() . '/tweet/update/like" method="POST">
+                            <form action="/profile/' . mb_strtolower($login->GetLogin()) . '/tweet/update/like" method="POST">
                                 <input name="_method" type="hidden" value="PUT" />
                                 <input type="hidden" name="tweet_like" value="' . $tweet->GetTweetLike() . '">
                                 <input type="hidden" name="tweet_id" value="' . $tweet->GetTweetId() . '">
