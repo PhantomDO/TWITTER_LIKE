@@ -100,6 +100,7 @@ class ProfileController extends ControllerBase
             $profile = new ProfileGateway($this->app);
             $profile->Hydrate($element);
             $result = $this->app->getService('profileFinder')->UserSearch($profile->GetLogin());
+            var_dump($result);
         } catch (\Exception $e) {
             $render = $this->app->getService('render');
             $render('Search',['error' => $e, 'profile' => $profile, 'search' => $result]); // On renvoie la profile acutelle au template
@@ -123,9 +124,9 @@ class ProfileController extends ControllerBase
 
             $profile = new ProfileGateway($this->app);
             $profile->Hydrate($element);
-            //var_dump($profile);
+            var_dump($profile);
             $follow = $profile->UserIsFollowing($profile->GetId());
-            //var_dump($follow);
+            var_dump($follow);
 
             if (!$follow)
                 $result = $profile->InsertFollower($profile->GetId());
