@@ -118,8 +118,8 @@ class ProfileGateway
 
     public function UserIsFollowing($id)
     {
-        //if (!$this->user_id) throw new \Error('Instance does not exist in base');
-        //var_dump($this->user_id);
+        if (!$this->user_id) throw new \Error('Instance does not exist in base');
+        var_dump($this->user_id);
         $query = $this->conn->prepare('
         SELECT followers.user_id, followers.follower_id FROM followers
         WHERE followers.follower_id = :follower_id
@@ -133,7 +133,7 @@ class ProfileGateway
 
         $element = $query->fetch(\PDO::FETCH_ASSOC);
 
-        if (!$element) false;
+        if (!$element) return false;
         else return true;
     }
 
