@@ -124,9 +124,9 @@ class ProfileController extends ControllerBase
 
             $profile = new ProfileGateway($this->app);
             $profile->Hydrate($element);
-            var_dump($profile);
+            //var_dump($profile);
             $follow = $profile->UserIsFollowing($profile->GetId());
-            var_dump($follow);
+            //var_dump($follow);
 
             if (!$follow)
                 $result = $profile->InsertFollower($profile->GetId());
@@ -144,7 +144,7 @@ class ProfileController extends ControllerBase
             print_r("Vous ne suivez plus : ". $profile->GetLogin());
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://app-28a26904-3909-4a49-9120-c242a67c0200.cleverapps.io/profile/" . mb_strtolower($profile->GetLogin()));
+        header( "refresh:1;url=http://app-28a26904-3909-4a49-9120-c242a67c0200.cleverapps.io/profile/" . mb_strtolower($profile->GetLogin()));
     }
 
     public function ProfileTweetHandlerUpdate($name, $delete)
