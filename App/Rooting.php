@@ -35,7 +35,7 @@ class Rooting
             $controller->SearchHandler();
         });
 
-        $this->app->Post('/handleSearch/', function () use ($app)
+        $this->app->Post('/handleSearch', function () use ($app)
         {
             $controller = new ProfileController($app);
             $controller->ProfileSearchUser();
