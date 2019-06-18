@@ -8,7 +8,7 @@
 </p>
 <h1>Timeline</h1>
 
-<a href="/profile/' . <?php echo $_SESSION['ProfileGateway']['login']?> . '">Mon profile</a>
+<a href="/profile/<?php echo $_SESSION['ProfileGateway']['login']?>">Mon profile</a>
 <a href="/search">Search</a><br><br>
 
 
