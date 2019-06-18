@@ -8,12 +8,14 @@
 </p>
 <h1>Search</h1>
 <p>
-    <form action="/handleSearch" method="POST"
+    <form action="/handleSearch" method="POST">
         <?php if (isset($params['error'])) echo "<p style='display: none'>"; ?>>
         <p>
             <input type="text" name="login">
         </p>
-        <button type="submit">Submit</button>
+        <a href="/handleSearch" method="POST">
+            <button type="submit">Submit</button>
+        </a>
     </form>
 </p>
 
