@@ -116,7 +116,7 @@ class ProfileFinder
         $follower = null;
         foreach ($element as $e)
         {
-            $follower = new ProfileGateway($this->app);
+            $follower = $this->FindOneByName($e['login']);;
             $followers[] = $follower;
         }
 
