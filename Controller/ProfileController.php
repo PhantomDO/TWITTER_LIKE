@@ -143,7 +143,7 @@ class ProfileController extends ControllerBase
             print_r("Vous ne suivez plus : ". $profile->GetLogin());
 
         //Set Refresh header using PHP.
-        header( "refresh:2;url=http://app-28a26904-3909-4a49-9120-c242a67c0200.cleverapps.io/profile/" . $profile->GetLogin());
+        header( "refresh:2;url=http://app-28a26904-3909-4a49-9120-c242a67c0200.cleverapps.io/profile/" . mb_strtolower($profile->GetLogin()));
     }
 
     public function ProfileTweetHandlerUpdate($name, $delete)
