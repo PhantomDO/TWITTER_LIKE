@@ -122,8 +122,8 @@ class ProfileGateway
         //var_dump($this->user_id);
         $query = $this->conn->prepare('
         SELECT followers.user_id, followers.follower_id FROM followers
-        WHERE followers.follower_id like :follower_id
-        AND followers.user_id like :user_id
+        WHERE followers.follower_id = :follower_id
+        AND followers.user_id = :user_id
         ');
 
         $executed = $query->execute([
