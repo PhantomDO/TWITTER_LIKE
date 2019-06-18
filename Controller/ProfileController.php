@@ -99,6 +99,7 @@ class ProfileController extends ControllerBase
 
             $profile = new ProfileGateway($this->app);
             $profile->Hydrate($element);
+            var_dump($profile);
             $result = $this->app->getService('profileFinder')->UserSearch($profile->GetLogin());
             var_dump($result);
         } catch (\Exception $e) {
